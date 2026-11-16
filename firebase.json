@@ -1,0 +1,29 @@
+{
+  "functions": [
+    {
+      "source": "backend",
+      "codebase": "default",
+      "runtime": "nodejs22",
+      "ignore": ["node_modules", ".git", "*.log", ".env.local", ".env.example", "src/setup.js"]
+    }
+  ],
+  "hosting": {
+    "site": "YOUR_PROJECT_ID-admin",
+    "public": "admin-panel/dist",
+    "predeploy": ["npm --prefix \"$PROJECT_DIR/admin-panel\" install", "npm --prefix \"$PROJECT_DIR/admin-panel\" run build"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/api/**", "function": { "functionId": "api", "region": "asia-south1" } },
+      { "source": "**", "destination": "/index.html" }
+    ],
+    "headers": [
+      { "source": "/assets/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+      { "source": "**/*.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+    ]
+  },
+  "emulators": {
+    "functions": { "port": 5001 },
+    "hosting": { "port": 5000 },
+    "ui": { "enabled": false }
+  }
+}
