@@ -4,3 +4,10 @@ dist/
 *.log
 backend/.env
 backend/.env.local
+
+# Local Netlify folder
+.netlify
+
+.env
+.env.*
+!.env.example
